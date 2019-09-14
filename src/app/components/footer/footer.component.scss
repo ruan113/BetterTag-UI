@@ -1,0 +1,12 @@
+.footer {
+    background: #2f2f2f;
+    height: 35px;
+    position: relative;
+    span{
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: orange;
+    }
+}
