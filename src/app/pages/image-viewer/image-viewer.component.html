@@ -3,8 +3,8 @@
     <div class="image-controller">
         <div class="controller-buttons">
             <button type="button" class="btn btn-primary" (click)="retorna()"><i class="fas fa-arrow-left"></i></button>
-            <button type="button" class="btn" [ngClass]="{'btn-danger': playing, 'btn-success': !playing}"
-                (click)="playing = !playing;">
+            <button type="button" class="btn" [ngClass]="{'btn-danger btn-paused': playing, 'btn-success': !playing}"
+                (click)="playing = !playing; setTimer();">
                 <i class="fas fa-play" *ngIf="!playing"></i>
                 <i class="fas fa-pause" *ngIf="playing"></i>
             </button>

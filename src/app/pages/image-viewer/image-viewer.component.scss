@@ -2,6 +2,7 @@
     width: fit-content;
     margin: 0;
     background: #2f2f2f;
+    border-top: 2px solid #1f1f1f;
     border-radius: 0 0 16px 16px;
     padding: 5px;
     margin: auto;
@@ -54,9 +55,19 @@
      }
 }
 
+@keyframes expand-btn {
+    from { width: 33.5px; }
+    to   { width: 90px; }
+}
+
 @keyframes fadein {
     from { opacity: 0; }
     to   { opacity: 1; }
+}
+
+@keyframes appears {
+    from { display: none; }
+    to   { display: block; }
 }
 
 /* Firefox < 16 */
