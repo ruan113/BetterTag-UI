@@ -26,6 +26,7 @@ export class ImageViewerComponent implements OnInit {
     LEFT_ARROW: 37,
     UP_ARROW: 38,
     DOWN_ARROW: 40,
+    SPACE_ARROW: 32
   };
 
   constructor(
@@ -55,6 +56,11 @@ export class ImageViewerComponent implements OnInit {
 
     if (event.keyCode === this.KEY_CODE.LEFT_ARROW) {
       this.retorna();
+    }
+
+    if (event.keyCode === this.KEY_CODE.SPACE_ARROW) {
+      this.playing = !this.playing;
+      this.setTimer()
     }
 
     if (event.keyCode === this.KEY_CODE.UP_ARROW) {
