@@ -13,9 +13,11 @@
     </div>
 
     <div class="img-wrapper">
-        <img src='{{photos[indexSelected].url}}' [ngClass]="{'d-none': loading}"
+        <!-- <img src='{{photos[indexSelected].url}}' [ngClass]="{'d-none': loading}"
             onerror='this.src="./../../../assets/images/404.png"' (load)="loading = false;"
-            *ngIf="photos.length > 0 && photos[indexSelected].url">
+            *ngIf="photos.length > 0 && photos[indexSelected].url"> -->
+        <img src='{{photos[indexSelected].url}}' [ngClass]="{'d-none': loading}" (error)='avanca();'
+            (load)="loading = false;" *ngIf="photos.length > 0 && photos[indexSelected].url">
         <div class="loader-wrapper" *ngIf="loading">
             <div class="loader"></div>
         </div>
