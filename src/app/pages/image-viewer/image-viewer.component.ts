@@ -4,6 +4,7 @@ import { map, timeoutWith } from 'rxjs/operators';
 import { Photo } from 'src/app/models/photo/photo';
 import { Observable } from 'rxjs';
 import { TouchSequence } from 'selenium-webdriver';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
   selector: 'app-image-viewer',
@@ -46,9 +47,14 @@ export class ImageViewerComponent implements OnInit {
     return this.photosService.list();
   }
 
+  removePhoto() {
+    console.log('Foto removida: ', this.photos[this.indexSelected]);
+    this.photos.splice(this.indexSelected, 1);
+  }
+
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    console.log(event);
+    // console.log(event);
 
     if (event.keyCode === this.KEY_CODE.RIGHT_ARROW) {
       this.avanca();
@@ -66,40 +72,32 @@ export class ImageViewerComponent implements OnInit {
     if (event.keyCode === this.KEY_CODE.UP_ARROW) {
       this.intervalLoopTime += 1000;
       console.log(this.intervalLoopTime);
-      clearInterval(this.intervalInstance);
       this.setTimer();
     }
 
     if (event.keyCode === this.KEY_CODE.DOWN_ARROW) {
       this.intervalLoopTime = (this.intervalLoopTime - 1000) > 4000 ? (this.intervalLoopTime - 1000) : 4000;
       console.log(this.intervalLoopTime);
-      clearInterval(this.intervalInstance);
       this.setTimer();
     }
   }
 
   avanca() {
     this.loading = true;
-    setTimeout(() => {
-      if ((this.indexSelected + 1) !== this.photos.length) {
-        this.indexSelected++;
-      } else {
-        this.indexSelected = 0;
-      }
-      console.log(this.indexSelected, this.photos[this.indexSelected])
-    }, 500);
+    if ((this.indexSelected + 1) !== this.photos.length) {
+      this.indexSelected++;
+    } else {
+      this.indexSelected = 0;
+    }
   }
 
   retorna() {
     this.loading = true;
-    setTimeout(() => {
-      if ((this.indexSelected - 1) >= 0) {
-        this.indexSelected--;
-      } else {
-        this.indexSelected = this.photos.length - 1;
-      }
-      console.log(this.indexSelected)
-    }, 500);
+    if ((this.indexSelected - 1) >= 0) {
+      this.indexSelected--;
+    } else {
+      this.indexSelected = this.photos.length - 1;
+    }
   }
 
   shuffle(array) {
@@ -123,11 +121,22 @@ export class ImageViewerComponent implements OnInit {
 
   setTimer() {
     if (this.playing) {
-      this.intervalInstance = setInterval(() => {
+      if (this.intervalInstance) {
+        clearTimeout(this.intervalInstance);
+        console.log('intervalo cleared');
+      }
+      console.log('intervalo setado');
+      this.intervalInstance = setTimeout(() => {
         this.avanca();
+        console.log('intervalo descetado');
+        this.intervalInstance = null;
       }, this.intervalLoopTime);
+
     } else {
-      clearInterval(this.intervalInstance);
+      if (this.intervalInstance) {
+        clearTimeout(this.intervalInstance);
+        this.intervalInstance = null;
+      }
     }
   }
 
