@@ -12,11 +12,23 @@
         </div>
     </div>
 
+    <div class="cronometro-wrapper" [ngClass]="{
+        'fade-out': playCronometroAnimation,
+        'hidden': !playCronometroAnimation}">
+        <div class="seconds-wrapper">
+            <span>{{intervalLoopTime/1000}}s</span>
+        </div>
+        <img src="./../../../assets/images/cronometro.svg" alt="">
+    </div>
+
     <div class="img-wrapper">
         <img src='{{photos[indexSelected].url}}' [ngClass]="{'d-none': loading}" (error)='removePhoto();'
-            (load)="loading = false; setTimer();" *ngIf="photos.length > 0 && photos[indexSelected].url">
+            (load)="loading = false; setTimer();" *ngIf="photos.length > 0 && photos[indexSelected].url && !isVideo">
 
-        <div class="loader-wrapper" *ngIf="loading">
+        <iframe #videoPlayer [src]="photos[indexSelected].url | safe" frameborder="0" scrolling="no" allowfullscreen
+            (load)="this.loading = false;" (error)='removePhoto();' *ngIf="isVideo"></iframe>
+
+        <div class="loader-wrapper" *ngIf="loading;">
             <div class="loader"></div>
         </div>
     </div>

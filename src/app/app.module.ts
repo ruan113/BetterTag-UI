@@ -9,13 +9,15 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PhotosService } from './services/photos/photos.service';
 import { ApiService } from './services/api/api.service';
+import { SafePipe } from './pipes/safe-pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ImageViewerComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    SafePipe
   ],
   imports: [
     BrowserModule,

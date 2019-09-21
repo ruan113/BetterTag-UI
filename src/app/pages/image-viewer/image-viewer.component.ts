@@ -1,9 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { PhotosService } from 'src/app/services/photos/photos.service';
-import { map, timeoutWith } from 'rxjs/operators';
 import { Photo } from 'src/app/models/photo/photo';
 import { Observable } from 'rxjs';
-import { TouchSequence } from 'selenium-webdriver';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
@@ -20,7 +18,11 @@ export class ImageViewerComponent implements OnInit {
   indexSelected = 0;
   loading = false;
 
+  playCronometroAnimation = false;
+  cronoAnimationInstance;
+
   photos: Array<Photo> = [];
+  isVideo = false;
 
   KEY_CODE = {
     RIGHT_ARROW: 39,
@@ -31,7 +33,8 @@ export class ImageViewerComponent implements OnInit {
   };
 
   constructor(
-    private photosService: PhotosService
+    private photosService: PhotosService,
+    private utilsService: UtilsService
   ) { }
 
   ngOnInit() {
@@ -39,8 +42,11 @@ export class ImageViewerComponent implements OnInit {
       this.photos = response.map((item: any) => {
         return { id: item._id, url: item.url };
       });
-      this.shuffle(this.photos);
+      // this.shuffle(this.photos);
+      console.log('oi', this.photos[this.indexSelected].url)
+      this.isVideo = this.utilsService.checkIsVideo(this.photos[this.indexSelected].url);
     });
+
   }
 
   getPhotos(): Observable<any> {
@@ -66,19 +72,21 @@ export class ImageViewerComponent implements OnInit {
 
     if (event.keyCode === this.KEY_CODE.SPACE_ARROW) {
       this.playing = !this.playing;
-      this.setTimer()
+      this.setTimer();
     }
 
     if (event.keyCode === this.KEY_CODE.UP_ARROW) {
       this.intervalLoopTime += 1000;
       console.log(this.intervalLoopTime);
       this.setTimer();
+      this.toogleCronometroAnimation();
     }
 
     if (event.keyCode === this.KEY_CODE.DOWN_ARROW) {
       this.intervalLoopTime = (this.intervalLoopTime - 1000) > 4000 ? (this.intervalLoopTime - 1000) : 4000;
       console.log(this.intervalLoopTime);
       this.setTimer();
+      this.toogleCronometroAnimation();
     }
   }
 
@@ -89,6 +97,8 @@ export class ImageViewerComponent implements OnInit {
     } else {
       this.indexSelected = 0;
     }
+    this.isVideo = this.utilsService.checkIsVideo(this.photos[this.indexSelected].url);
+    console.log(this.photos[this.indexSelected]);
   }
 
   retorna() {
@@ -98,6 +108,8 @@ export class ImageViewerComponent implements OnInit {
     } else {
       this.indexSelected = this.photos.length - 1;
     }
+    console.log(this.photos[this.indexSelected].url);
+    this.isVideo = this.utilsService.checkIsVideo(this.photos[this.indexSelected].url);
   }
 
   shuffle(array) {
@@ -119,16 +131,24 @@ export class ImageViewerComponent implements OnInit {
     return array;
   }
 
+  toogleCronometroAnimation() {
+    if (!this.cronoAnimationInstance) {
+      this.playCronometroAnimation = true;
+
+      this.cronoAnimationInstance = setTimeout(() => {
+        this.playCronometroAnimation = false;
+        this.cronoAnimationInstance = null;
+      }, 1000);
+    }
+  }
+
   setTimer() {
     if (this.playing) {
       if (this.intervalInstance) {
         clearTimeout(this.intervalInstance);
-        console.log('intervalo cleared');
       }
-      console.log('intervalo setado');
       this.intervalInstance = setTimeout(() => {
         this.avanca();
-        console.log('intervalo descetado');
         this.intervalInstance = null;
       }, this.intervalLoopTime);
 
@@ -139,5 +159,4 @@ export class ImageViewerComponent implements OnInit {
       }
     }
   }
-
 }
