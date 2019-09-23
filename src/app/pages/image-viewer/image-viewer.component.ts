@@ -3,6 +3,7 @@ import { PhotosService } from 'src/app/services/photos/photos.service';
 import { Photo } from 'src/app/models/photo/photo';
 import { Observable } from 'rxjs';
 import { UtilsService } from 'src/app/services/utils/utils.service';
+import { Filter } from 'src/app/models/filter/filter';
 
 @Component({
   selector: 'app-image-viewer',
@@ -22,7 +23,13 @@ export class ImageViewerComponent implements OnInit {
   cronoAnimationInstance;
 
   photos: Array<Photo> = [];
-  isVideo = false;
+  needIframe = false;
+
+  filter: Filter = {
+    showImages: true,
+    showGifs: true,
+    showVideos: true
+  };
 
   KEY_CODE = {
     RIGHT_ARROW: 39,
@@ -43,8 +50,10 @@ export class ImageViewerComponent implements OnInit {
         return { id: item._id, url: item.url };
       });
       // this.shuffle(this.photos);
-      console.log('oi', this.photos[this.indexSelected].url)
-      this.isVideo = this.utilsService.checkIsVideo(this.photos[this.indexSelected].url);
+      if (!this.validateResource(this.photos[this.indexSelected].url)) {
+        this.avanca();
+      }
+      this.needIframe = this.utilsService.checkIfNeedIframe(this.photos[this.indexSelected].url);
     });
 
   }
@@ -56,6 +65,24 @@ export class ImageViewerComponent implements OnInit {
   removePhoto() {
     console.log('Foto removida: ', this.photos[this.indexSelected]);
     this.photos.splice(this.indexSelected, 1);
+  }
+
+  validateResource(url) {
+    if (this.filter.showGifs && (this.utilsService.checkIsGif(url) || this.utilsService.checkIsGifEmbed(url))) {
+      return true;
+    }
+    if (this.filter.showImages && this.utilsService.checkIsImage(url)) {
+      return true;
+    }
+    if (this.filter.showVideos && this.utilsService.checkIsVideo(url)) {
+      return true;
+    }
+    return false;
+  }
+
+  setFilterChanges(event: Filter) {
+    this.filter = event;
+    console.log("new Filters: ", this.filter);
   }
 
   @HostListener('window:keyup', ['$event'])
@@ -97,7 +124,11 @@ export class ImageViewerComponent implements OnInit {
     } else {
       this.indexSelected = 0;
     }
-    this.isVideo = this.utilsService.checkIsVideo(this.photos[this.indexSelected].url);
+    if (this.validateResource(this.photos[this.indexSelected].url)) {
+      this.needIframe = this.utilsService.checkIfNeedIframe(this.photos[this.indexSelected].url);
+    } else {
+      this.avanca();
+    }
     console.log(this.photos[this.indexSelected]);
   }
 
@@ -109,7 +140,11 @@ export class ImageViewerComponent implements OnInit {
       this.indexSelected = this.photos.length - 1;
     }
     console.log(this.photos[this.indexSelected].url);
-    this.isVideo = this.utilsService.checkIsVideo(this.photos[this.indexSelected].url);
+    if (this.validateResource(this.photos[this.indexSelected].url)) {
+      this.needIframe = this.utilsService.checkIfNeedIframe(this.photos[this.indexSelected].url);
+    } else {
+      this.retorna();
+    }
   }
 
   shuffle(array) {

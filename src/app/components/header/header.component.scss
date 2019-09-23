@@ -11,6 +11,7 @@
 .navbar {
     padding: 0 1rem !important;
     background: #2f2f2f !important;
+    z-index: 9999;
 }
 
 .navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {

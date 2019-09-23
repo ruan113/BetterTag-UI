@@ -2,6 +2,13 @@
     position: relative;
 }
 
+app-content-filter {
+    position: absolute;
+    top: 0;
+    left: 50px;
+    z-index: 1;
+}
+
 .controller-buttons{
     width: fit-content;
     margin: 0;

@@ -10,6 +10,7 @@
             </button>
             <button type="button" class="btn btn-primary" (click)="avanca()"><i class="fas fa-arrow-right"></i></button>
         </div>
+        <app-content-filter (changes)="setFilterChanges($event)"></app-content-filter>
     </div>
 
     <div class="cronometro-wrapper" [ngClass]="{
@@ -23,10 +24,11 @@
 
     <div class="img-wrapper">
         <img src='{{photos[indexSelected].url}}' [ngClass]="{'d-none': loading}" (error)='removePhoto();'
-            (load)="loading = false; setTimer();" *ngIf="photos.length > 0 && photos[indexSelected].url && !isVideo">
+            (load)="loading = false; setTimer();" *ngIf="photos.length > 0 && photos[indexSelected].url && !needIframe">
 
-        <iframe #videoPlayer [src]="photos[indexSelected].url | safe" frameborder="0" scrolling="no" allowfullscreen
-            (load)="this.loading = false;" (error)='removePhoto();' *ngIf="isVideo"></iframe>
+        <iframe [src]="photos[indexSelected].url | safe" frameborder="0" scrolling="no" allowfullscreen
+            (load)="this.loading = false; this.utilsService.checkIsVideo(photos[indexSelected].url) ? null : setTimer()"
+            (error)='removePhoto();' *ngIf="needIframe"></iframe>
 
         <div class="loader-wrapper" *ngIf="loading;">
             <div class="loader"></div>
