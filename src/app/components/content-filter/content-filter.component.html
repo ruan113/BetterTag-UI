@@ -1,0 +1,28 @@
+<div class="inner-body" [ngClass]="{'body-opened': showFilter, 'body-closed': !showFilter}">
+    <div class="content-types">
+        <h4>Only show:</h4>
+        <div class="options-panel">
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="filter.showImages"
+                        (click)="emitChanges()">Images
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="filter.showGifs"
+                        (click)="emitChanges()">Gifs
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="filter.showVideos"
+                        (click)="emitChanges()">Videos
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="button-wrapper">
+        <button class="btn expansion-button" (click)="showFilter = !showFilter;"><i class="fa fa-bars"></i></button>
+    </div>
+</div>
