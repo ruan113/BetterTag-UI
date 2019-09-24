@@ -36,6 +36,12 @@ export class UtilsService {
     if (url.indexOf('xvideos') !== -1) {
       return true;
     }
+    if (url.indexOf('redtube') !== -1) {
+      return true;
+    }
+    if (url.indexOf('xhamster') !== -1) {
+      return true;
+    }
     return false;
   }
 
