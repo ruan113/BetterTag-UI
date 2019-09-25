@@ -31,6 +31,8 @@ export class ImageViewerComponent implements OnInit {
     showVideos: true
   };
 
+  showStatusBoard = true;
+
   KEY_CODE = {
     RIGHT_ARROW: 39,
     LEFT_ARROW: 37,
@@ -49,7 +51,7 @@ export class ImageViewerComponent implements OnInit {
       this.photos = response.map((item: any) => {
         return { id: item._id, url: item.url };
       });
-      // this.shuffle(this.photos);
+      this.shuffle(this.photos);
       if (!this.validateResource(this.photos[this.indexSelected].url)) {
         this.avanca();
       }

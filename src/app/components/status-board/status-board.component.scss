@@ -1,0 +1,27 @@
+.inner-body {
+    width: 400px;
+    background: #2f2f2f !important;
+    border-radius: 10px;
+    padding: 10px 15px;
+    border: 3px solid grey;
+    color: white;
+    position: relative;
+
+    .title {
+        text-align: center;
+        h2 {
+            border-bottom: 3px solid grey;
+        }
+    }
+    .buttons-panel {
+        margin: 10px 0 0 0;
+        text-align: center;
+    }
+
+    i {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+    }
+}

@@ -11,6 +11,10 @@
             <button type="button" class="btn btn-primary" (click)="avanca()"><i class="fas fa-arrow-right"></i></button>
         </div>
         <app-content-filter (changes)="setFilterChanges($event)"></app-content-filter>
+        <div class="status-button" (click)="showStatusBoard = !showStatusBoard;">
+            <i class="fas fa-chevron-circle-left"
+                [ngClass]="{'status-opened ': showStatusBoard, 'status-closed ': !showStatusBoard}"></i>
+        </div>
     </div>
 
     <div class="cronometro-wrapper" [ngClass]="{
@@ -22,6 +26,8 @@
         <img src="./../../../assets/images/cronometro.svg" alt="">
     </div>
 
+    <app-status-board (close)="showStatusBoard = $event;"
+        [ngClass]="{'status-opened ': showStatusBoard, 'status-closed ': !showStatusBoard}"></app-status-board>
     <div class="img-wrapper">
         <img src='{{photos[indexSelected].url}}' [ngClass]="{'d-none': loading}" (error)='removePhoto();'
             (load)="loading = false; setTimer();" *ngIf="photos.length > 0 && photos[indexSelected].url && !needIframe">
