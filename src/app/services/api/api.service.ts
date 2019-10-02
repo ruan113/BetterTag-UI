@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import * as URI from "uri-js";
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -26,14 +25,9 @@ export class ApiService {
       });
   }
 
-  getResources() {
-
-  }
-
   get(params?: any) {
     return this.httpclient.get(this.apiEndPoint + '/' + this.resource, {
       headers: this.getHeaders()
     });
   }
-
 }
