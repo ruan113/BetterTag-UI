@@ -1,23 +1,35 @@
-<div class="inner-body" [ngClass]="{'body-opened': showFilter, 'body-closed': !showFilter}">
+<div class="inner-body"
+    [ngClass]="{'body-opened': showFilter, 'body-closed': !showFilter, 'transparent': filter.modes.fullScreen}">
     <div class="content-types">
         <h4>Only show:</h4>
         <div class="options-panel">
             <div class="form-check">
                 <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" [(ngModel)]="filter.showImages"
-                        (click)="emitChanges()">Images
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="filter.onlyShow.showImages"
+                        (click)="setChanges()">Images
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" [(ngModel)]="filter.showGifs"
-                        (click)="emitChanges()">Gifs
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="filter.onlyShow.showGifs"
+                        (click)="setChanges()">Gifs
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" [(ngModel)]="filter.showVideos"
-                        (click)="emitChanges()">Videos
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="filter.onlyShow.showVideos"
+                        (click)="setChanges()">Videos
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="content-types">
+        <h4>Modes:</h4>
+        <div class="options-panel">
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="filter.modes.fullScreen"
+                        (click)="setChanges()">Fullscreen
                 </label>
             </div>
         </div>

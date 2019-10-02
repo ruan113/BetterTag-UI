@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Meta } from '@angular/platform-browser';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { Filter } from 'src/app/models/filter/filter';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,33 @@ export class UtilsService {
 
   httpclient;
 
+  private filtersChange$: BehaviorSubject<Filter> = new BehaviorSubject<Filter>(null);
+  filtersChange = this.filtersChange$.asObservable();
+  filters: Filter;
+
   constructor(http: HttpClient) {
     this.httpclient = http;
+
+    //Seta valor inicial dos filtros
+    this.filtersChange$.next({
+      onlyShow: {
+        showImages: true,
+        showGifs: true,
+        showVideos: true
+      },
+      modes: {
+        fullScreen: false
+      }
+    });
+  }
+
+  setFilters(filters: Filter) {
+    this.filters = filters;
+    this.filtersChange$.next(this.filters);
+  }
+
+  getFilters() {
+    return this.filters;
   }
 
   getUrl(url: string): Observable<any> {

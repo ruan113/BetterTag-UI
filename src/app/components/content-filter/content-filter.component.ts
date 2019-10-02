@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Filter } from 'src/app/models/filter/filter';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
   selector: 'app-content-filter',
@@ -11,20 +12,26 @@ export class ContentFilterComponent implements OnInit {
   showFilter = false;
 
   filter: Filter = {
-    showImages: true,
-    showGifs: true,
-    showVideos: true
+    onlyShow: {
+      showImages: true,
+      showGifs: true,
+      showVideos: true
+    },
+    modes: {
+      fullScreen: false
+    }
   }
 
   @Output() changes: EventEmitter<Filter> = new EventEmitter<Filter>();
 
-  constructor() { }
+  constructor(private utilsService: UtilsService) { }
 
   ngOnInit() {
   }
 
-  emitChanges() {
-    this.changes.emit(this.filter);
+  setChanges() {
+    console.log('novos filtros: ', this.filter);
+    this.utilsService.setFilters(this.filter);
   }
 
 }

@@ -1,7 +1,12 @@
 export class Filter {
-    showImages: boolean;
-    showGifs: boolean;
-    showVideos: boolean;
+    onlyShow: {
+        showImages: boolean;
+        showGifs: boolean;
+        showVideos: boolean;
+    };
+    modes: {
+        fullScreen: boolean
+    };
 
     constructor() {
     }

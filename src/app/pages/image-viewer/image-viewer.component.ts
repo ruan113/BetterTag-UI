@@ -1,16 +1,19 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { PhotosService } from 'src/app/services/photos/photos.service';
 import { Photo } from 'src/app/models/photo/photo';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { Filter } from 'src/app/models/filter/filter';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-image-viewer',
   templateUrl: './image-viewer.component.html',
   styleUrls: ['./image-viewer.component.scss']
 })
-export class ImageViewerComponent implements OnInit {
+export class ImageViewerComponent implements OnInit, OnDestroy {
+
+  private onDestroy$ = new Subject();
 
   playing = false;
   intervalLoopTime = 5000; //Em ms
@@ -26,10 +29,17 @@ export class ImageViewerComponent implements OnInit {
   needIframe = false;
 
   filter: Filter = {
-    showImages: true,
-    showGifs: true,
-    showVideos: true
+    onlyShow: {
+      showImages: true,
+      showGifs: true,
+      showVideos: true
+    },
+    modes: {
+      fullScreen: false
+    }
   };
+
+  @Output() fullScreenMode: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   showStatusBoard = true;
 
@@ -44,7 +54,15 @@ export class ImageViewerComponent implements OnInit {
   constructor(
     private photosService: PhotosService,
     private utilsService: UtilsService
-  ) { }
+  ) {
+    this.utilsService.filtersChange.pipe(
+      takeUntil(this.onDestroy$.asObservable())
+    ).subscribe({
+      next: (response: Filter) => {
+        this.filter = response;
+      }
+    });
+  }
 
   ngOnInit() {
     this.getPhotos().subscribe((response) => {
@@ -57,7 +75,10 @@ export class ImageViewerComponent implements OnInit {
       }
       this.needIframe = this.utilsService.checkIfNeedIframe(this.photos[this.indexSelected].url);
     });
+  }
 
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
 
   getPhotos(): Observable<any> {
@@ -70,20 +91,20 @@ export class ImageViewerComponent implements OnInit {
   }
 
   validateResource(url) {
-    if (this.filter.showGifs && (this.utilsService.checkIsGif(url) || this.utilsService.checkIsGifEmbed(url))) {
+    if (this.filter.onlyShow.showGifs && (this.utilsService.checkIsGif(url) || this.utilsService.checkIsGifEmbed(url))) {
       return true;
     }
-    if (this.filter.showImages && this.utilsService.checkIsImage(url)) {
+    if (this.filter.onlyShow.showImages && this.utilsService.checkIsImage(url)) {
       return true;
     }
-    if (this.filter.showVideos && this.utilsService.checkIsVideo(url)) {
+    if (this.filter.onlyShow.showVideos && this.utilsService.checkIsVideo(url)) {
       return true;
     }
     return false;
   }
 
-  setFilterChanges(event: Filter) {
-    this.filter = event;
+  setFilterChanges() {
+    this.filter = this.utilsService.filters;
     console.log("new Filters: ", this.filter);
   }
 
