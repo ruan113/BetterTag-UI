@@ -28,8 +28,13 @@
         <div class="options-panel">
             <div class="form-check">
                 <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" [(ngModel)]="filter.modes.fullScreen"
-                        (click)="setChanges()">Fullscreen
+                    <!-- Coloquei !filter.modes.fullScreen pois, graças a um bug, 
+                        sempre que eu buscava pela variável somente em arquivos.ts 
+                        o valor retornava o inverso -->
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="filter.modes.fullScreen" (click)="
+                        setChanges(); 
+                        !filter.modes.fullScreen ? openFullscreen() : closeFullscreen();
+                        ">Fullscreen
                 </label>
             </div>
         </div>

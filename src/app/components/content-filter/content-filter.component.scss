@@ -1,4 +1,6 @@
 $translationIn: -185px;
+$max-opacity: 0.9;
+$min-opacity: 0.2;
 
 .inner-body {
     width: 200px;
@@ -10,25 +12,25 @@ $translationIn: -185px;
     background: #191919;
 
     &.body-closed {
-        animation: slideUp 1s;
+        animation: slideUp .5s;
         transform: translateY($translationIn);
+        opacity: $min-opacity;
        
         &.transparent{
-            opacity: 0.1;
+            opacity: $min-opacity;
         }
     }
     &.body-opened {
-        animation: slideDown 1s;
+        animation: slideDown .5s;
         transform: translateY(0);
+        opacity: $max-opacity;
         
         &.transparent{
-            opacity: 1;
+            opacity: $max-opacity;
         }
     }
     
 }
-
-
 
 .content-types {
     color: white;
@@ -50,11 +52,23 @@ $translationIn: -185px;
 }
 
 @keyframes slideUp {
-    from { transform: translateY(0); }
-    to   { transform: translateY($translationIn); }
+    from { 
+        transform: translateY(0);
+        opacity: $max-opacity; 
+    }
+    to   { 
+        transform: translateY($translationIn); 
+        opacity: $min-opacity;
+    }
 }
 
 @keyframes slideDown {
-    from { transform: translateY($translationIn); }
-    to   { transform: translateY(0); }
+    from { 
+        transform: translateY($translationIn); 
+        opacity: $min-opacity;
+    }
+    to   { 
+        transform: translateY(0);
+        opacity: $max-opacity; 
+    }
 }

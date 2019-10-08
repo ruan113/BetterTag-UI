@@ -1,6 +1,6 @@
 <!-- IMAGE SHOW CONTROLLER -->
-<div class="inner-body">
-    <app-content-filter (changes)="setFilterChanges()"></app-content-filter>
+<div id="viewer-body" class="inner-body" [ngClass]="{'full-screen': filter.modes.fullScreen}">
+    <app-content-filter></app-content-filter>
 
     <div class="image-controller" *ngIf="!filter.modes.fullScreen">
         <div class="controller-buttons">
@@ -29,7 +29,7 @@
 
     <app-status-board (close)="showStatusBoard = $event;"
         [ngClass]="{'status-opened ': showStatusBoard, 'status-closed ': !showStatusBoard}"></app-status-board>
-    <div class="img-wrapper">
+    <div class="img-wrapper" [ngClass]="{'img-fullscreen': filter.modes.fullScreen}">
         <img src='{{photos[indexSelected].url}}' [ngClass]="{'d-none': loading}" (error)='removePhoto();'
             (load)="loading = false; setTimer();" *ngIf="photos.length > 0 && photos[indexSelected].url && !needIframe">
 

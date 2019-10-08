@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { Component, OnInit, HostListener, EventEmitter, Output, OnDestroy, Inject } from '@angular/core';
 import { PhotosService } from 'src/app/services/photos/photos.service';
 import { Photo } from 'src/app/models/photo/photo';
 import { Observable, Subject } from 'rxjs';
@@ -12,7 +12,6 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./image-viewer.component.scss']
 })
 export class ImageViewerComponent implements OnInit, OnDestroy {
-
   private onDestroy$ = new Subject();
 
   playing = false;
@@ -41,7 +40,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
 
   @Output() fullScreenMode: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  showStatusBoard = true;
+  showStatusBoard = false;
 
   KEY_CODE = {
     RIGHT_ARROW: 39,
@@ -53,7 +52,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
 
   constructor(
     private photosService: PhotosService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
   ) {
     this.utilsService.filtersChange.pipe(
       takeUntil(this.onDestroy$.asObservable())
@@ -101,11 +100,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
       return true;
     }
     return false;
-  }
-
-  setFilterChanges() {
-    this.filter = this.utilsService.filters;
-    console.log("new Filters: ", this.filter);
   }
 
   @HostListener('window:keyup', ['$event'])
