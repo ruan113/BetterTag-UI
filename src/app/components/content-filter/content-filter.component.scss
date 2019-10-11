@@ -1,4 +1,5 @@
 $translationIn: -185px;
+$translationInExp: -240px;
 $max-opacity: 0.9;
 $min-opacity: 0.2;
 
@@ -11,6 +12,7 @@ $min-opacity: 0.2;
     padding: 10px;
     background: #191919;
 
+    // Off Fullscreen
     &.body-closed {
         animation: slideUp .5s;
         transform: translateY($translationIn);
@@ -18,6 +20,10 @@ $min-opacity: 0.2;
        
         &.transparent{
             opacity: $min-opacity;
+        }
+        &.on-Fullscreen {
+            animation: slideUpFullscreen .5s !important;
+            transform: translateY($translationInExp) !important;
         }
     }
     &.body-opened {
@@ -28,8 +34,11 @@ $min-opacity: 0.2;
         &.transparent{
             opacity: $max-opacity;
         }
+        &.on-Fullscreen {
+            animation: slideDownFullscreen .5s !important;
+            transform: translateY(0) !important;
+        }
     }
-    
 }
 
 .content-types {
@@ -65,6 +74,28 @@ $min-opacity: 0.2;
 @keyframes slideDown {
     from { 
         transform: translateY($translationIn); 
+        opacity: $min-opacity;
+    }
+    to   { 
+        transform: translateY(0);
+        opacity: $max-opacity; 
+    }
+}
+
+@keyframes slideUpFullscreen {
+    from { 
+        transform: translateY(0);
+        opacity: $max-opacity; 
+    }
+    to   { 
+        transform: translateY($translationInExp); 
+        opacity: $min-opacity;
+    }
+}
+
+@keyframes slideDownFullscreen {
+    from { 
+        transform: translateY($translationInExp); 
         opacity: $min-opacity;
     }
     to   { 

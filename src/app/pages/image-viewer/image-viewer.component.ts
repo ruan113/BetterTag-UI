@@ -160,6 +160,11 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     }
   }
 
+  play() {
+    this.playing = !this.playing;
+    this.setTimer();
+  }
+
   shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
 

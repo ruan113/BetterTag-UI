@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Filter } from 'src/app/models/filter/filter';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { DOCUMENT } from '@angular/common';
@@ -23,8 +23,6 @@ export class ContentFilterComponent implements OnInit {
       fullScreen: false
     }
   }
-
-  @Output() setFullscreen: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
   constructor(
     private utilsService: UtilsService,

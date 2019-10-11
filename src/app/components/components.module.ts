@@ -5,12 +5,14 @@ import { FooterComponent } from './footer/footer.component';
 import { StatusBoardComponent } from './status-board/status-board.component';
 import { ContentFilterComponent } from './content-filter/content-filter.component';
 import { FormsModule } from '@angular/forms';
+import { DisplayControllerComponent } from './display-controller/display-controller.component';
 
 const components = [
   HeaderComponent,
   FooterComponent,
   StatusBoardComponent,
-  ContentFilterComponent
+  ContentFilterComponent,
+  DisplayControllerComponent
 ];
 
 @NgModule({

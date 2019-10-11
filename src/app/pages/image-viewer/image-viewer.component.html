@@ -1,21 +1,18 @@
 <!-- IMAGE SHOW CONTROLLER -->
 <div id="viewer-body" class="inner-body" [ngClass]="{'full-screen': filter.modes.fullScreen}">
-    <app-content-filter></app-content-filter>
+    <app-content-filter>
+        <app-display-controller (onNext)="avanca()" (onBack)="retorna()" (onPlay)="play()" [playing]="playing"
+            *ngIf="filter.modes.fullScreen">
+        </app-display-controller>
+    </app-content-filter>
 
-    <div class="image-controller" *ngIf="!filter.modes.fullScreen">
-        <div class="controller-buttons">
-            <button type="button" class="btn btn-primary" (click)="retorna()"><i class="fas fa-arrow-left"></i></button>
-            <button type="button" class="btn" [ngClass]="{'btn-danger btn-paused': playing, 'btn-success': !playing}"
-                (click)="playing = !playing; setTimer();">
-                <i class="fas fa-play" *ngIf="!playing"></i>
-                <i class="fas fa-pause" *ngIf="playing"></i>
-            </button>
-            <button type="button" class="btn btn-primary" (click)="avanca()"><i class="fas fa-arrow-right"></i></button>
-        </div>
-        <div class="status-button" (click)="showStatusBoard = !showStatusBoard;">
-            <i class="fas fa-chevron-circle-left"
-                [ngClass]="{'status-opened ': showStatusBoard, 'status-closed ': !showStatusBoard}"></i>
-        </div>
+    <app-display-controller (onNext)="avanca()" (onBack)="retorna()" (onPlay)="play()" [playing]="playing"
+        *ngIf="!filter.modes.fullScreen">
+    </app-display-controller>
+
+    <div class="status-button" (click)="showStatusBoard = !showStatusBoard;" *ngIf="!filter.modes.fullScreen">
+        <i class="fas fa-chevron-circle-left"
+            [ngClass]="{'status-opened ': showStatusBoard, 'status-closed ': !showStatusBoard}"></i>
     </div>
 
     <div class="cronometro-wrapper" [ngClass]="{

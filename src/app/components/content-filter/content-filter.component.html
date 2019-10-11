@@ -1,6 +1,12 @@
-<div class="inner-body"
-    [ngClass]="{'body-opened': showFilter, 'body-closed': !showFilter, 'transparent': filter.modes.fullScreen}">
+<div class="inner-body" [ngClass]="{
+        'body-opened': showFilter, 
+        'body-closed': !showFilter, 
+        'transparent': filter.modes.fullScreen,
+        'on-Fullscreen': filter.modes.fullScreen
+    }">
     <div class="content-types">
+        <ng-content></ng-content>
+
         <h4>Only show:</h4>
         <div class="options-panel">
             <div class="form-check">
