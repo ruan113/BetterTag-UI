@@ -64,7 +64,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getPhotos().subscribe((response) => {
+    this.photosService.list().subscribe((response) => {
       this.photos = response.map((item: any) => {
         return { id: item._id, url: item.url };
       });
@@ -78,10 +78,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.onDestroy$.next();
-  }
-
-  getPhotos(): Observable<any> {
-    return this.photosService.list();
   }
 
   removePhoto() {
