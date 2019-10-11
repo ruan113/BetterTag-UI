@@ -1,0 +1,11 @@
+<div class="image-controller">
+    <div class="controller-buttons" [ngClass]="{'round-radius': isFullscreen}">
+        <button type="button" class="btn btn-primary" (click)="retorna()"><i class="fas fa-arrow-left"></i></button>
+        <button type="button" class="btn" [ngClass]="{'btn-danger btn-paused': playing, 'btn-success': !playing}"
+            (click)="play()">
+            <i class="fas fa-play" *ngIf="!playing"></i>
+            <i class="fas fa-pause" *ngIf="playing"></i>
+        </button>
+        <button type="button" class="btn btn-primary" (click)="avanca()"><i class="fas fa-arrow-right"></i></button>
+    </div>
+</div>

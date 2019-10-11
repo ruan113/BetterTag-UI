@@ -1,0 +1,49 @@
+.image-controller {
+    .controller-buttons{
+        width: fit-content;
+        margin: 0;
+        background: #2f2f2f;
+        border-top: 2px solid #1f1f1f;
+        border-radius: 0 0 16px 16px;
+        padding: 5px;
+        margin: auto;
+        height: 45px;
+
+        &.round-radius{
+            border-radius: 16px !important;
+            margin-bottom: 5px !important;
+        }
+        
+        button{
+            margin: 0 5px;
+            font-size: 20px;
+            padding: 0px 7px !important;
+        }
+    }
+    // .controller-on-hover:hover {
+    //     animation: controller-up 0.2s;
+    //     transform: translateY(-50px);
+    // }
+    // .controller-on-hover:hover {
+    //     padding-bottom: 50px;
+    //     position: absolute;
+    //     width: 100%;
+    //     z-index: 2;
+    //     top: 0;
+    //     .controller-buttons{
+    //         animation: controller-down 0.2s;
+    //         transform: translateY(0px);
+    //     }
+    // }
+}
+
+// @keyframes controller-up {
+//     from { transform: translateY(0px); }
+//     to   { transform: translateY(-50px); }
+// }
+
+// @keyframes controller-down {
+//     from { transform: translateY(-50px); }
+//     to   { transform: translateY(0px); }
+// }
+
