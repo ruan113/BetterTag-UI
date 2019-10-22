@@ -60,6 +60,7 @@ $min-opacity: 0.2;
     }
 }
 
+// Essas animações ficam aqui por dependerem das variaveis
 @keyframes slideUp {
     from {
         transform: translateY(0);
