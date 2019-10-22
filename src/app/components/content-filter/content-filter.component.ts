@@ -20,7 +20,8 @@ export class ContentFilterComponent implements OnInit {
       showVideos: true
     },
     modes: {
-      fullScreen: false
+      fullScreen: false,
+      underAgedMode: true
     }
   }
 
@@ -31,6 +32,7 @@ export class ContentFilterComponent implements OnInit {
 
   ngOnInit() {
     this.elem = document.documentElement;
+    this.utilsService.setFilters(this.filter);
   }
 
   setChanges() {

@@ -5,9 +5,19 @@ export class Filter {
         showVideos: boolean;
     };
     modes: {
-        fullScreen: boolean
+      fullScreen: boolean,
+      underAgedMode: boolean
     };
 
     constructor() {
+      this.onlyShow = {
+        showImages: true,
+        showGifs: true,
+        showVideos: true,
+      };
+      this.modes = {
+        fullScreen: false,
+        underAgedMode: false
+      };
     }
 }

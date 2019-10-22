@@ -15,7 +15,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   private onDestroy$ = new Subject();
 
   playing = false;
-  intervalLoopTime = 5000; //Em ms
+  intervalLoopTime = 5000; // Em ms
   intervalInstance;
 
   indexSelected = 0;
@@ -27,16 +27,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   photos: Array<Photo> = [];
   needIframe = false;
 
-  filter: Filter = {
-    onlyShow: {
-      showImages: true,
-      showGifs: true,
-      showVideos: true
-    },
-    modes: {
-      fullScreen: false
-    }
-  };
+  filter: Filter;
 
   @Output() fullScreenMode: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -64,6 +55,8 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.filter = new Filter();
+
     this.photosService.list().subscribe((response) => {
       this.photos = response.map((item: any) => {
         return { id: item._id, url: item.url };

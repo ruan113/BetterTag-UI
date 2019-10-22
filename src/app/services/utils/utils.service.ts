@@ -16,18 +16,6 @@ export class UtilsService {
 
   constructor(http: HttpClient) {
     this.httpclient = http;
-
-    //Seta valor inicial dos filtros
-    this.filtersChange$.next({
-      onlyShow: {
-        showImages: true,
-        showGifs: true,
-        showVideos: true
-      },
-      modes: {
-        fullScreen: false
-      }
-    });
   }
 
   setFilters(filters: Filter) {

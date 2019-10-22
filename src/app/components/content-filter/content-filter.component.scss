@@ -1,4 +1,4 @@
-$translationIn: -185px;
+$translationIn: -210px;
 $translationInExp: -240px;
 $max-opacity: 0.9;
 $min-opacity: 0.2;
@@ -17,7 +17,7 @@ $min-opacity: 0.2;
         animation: slideUp .5s;
         transform: translateY($translationIn);
         opacity: $min-opacity;
-       
+
         &.transparent{
             opacity: $min-opacity;
         }
@@ -30,7 +30,7 @@ $min-opacity: 0.2;
         animation: slideDown .5s;
         transform: translateY(0);
         opacity: $max-opacity;
-        
+
         &.transparent{
             opacity: $max-opacity;
         }
@@ -61,45 +61,45 @@ $min-opacity: 0.2;
 }
 
 @keyframes slideUp {
-    from { 
+    from {
         transform: translateY(0);
-        opacity: $max-opacity; 
+        opacity: $max-opacity;
     }
-    to   { 
-        transform: translateY($translationIn); 
+    to   {
+        transform: translateY($translationIn);
         opacity: $min-opacity;
     }
 }
 
 @keyframes slideDown {
-    from { 
-        transform: translateY($translationIn); 
+    from {
+        transform: translateY($translationIn);
         opacity: $min-opacity;
     }
-    to   { 
+    to   {
         transform: translateY(0);
-        opacity: $max-opacity; 
+        opacity: $max-opacity;
     }
 }
 
 @keyframes slideUpFullscreen {
-    from { 
+    from {
         transform: translateY(0);
-        opacity: $max-opacity; 
+        opacity: $max-opacity;
     }
-    to   { 
-        transform: translateY($translationInExp); 
+    to   {
+        transform: translateY($translationInExp);
         opacity: $min-opacity;
     }
 }
 
 @keyframes slideDownFullscreen {
-    from { 
-        transform: translateY($translationInExp); 
+    from {
+        transform: translateY($translationInExp);
         opacity: $min-opacity;
     }
-    to   { 
+    to   {
         transform: translateY(0);
-        opacity: $max-opacity; 
+        opacity: $max-opacity;
     }
 }

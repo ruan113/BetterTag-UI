@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { UtilsService } from './services/utils/utils.service';
 import { Filter } from './models/filter/filter';
 import { takeUntil } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'bettertag-ui';
 
   private onDestroy$ = new Subject();
@@ -25,6 +25,10 @@ export class AppComponent implements OnDestroy {
         this.filter = response;
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.filter = new Filter();
   }
 
   ngOnDestroy(): void {

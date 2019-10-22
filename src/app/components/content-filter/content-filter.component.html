@@ -1,6 +1,6 @@
 <div class="inner-body" [ngClass]="{
-        'body-opened': showFilter, 
-        'body-closed': !showFilter, 
+        'body-opened': showFilter,
+        'body-closed': !showFilter,
         'transparent': filter.modes.fullScreen,
         'on-Fullscreen': filter.modes.fullScreen
     }">
@@ -37,15 +37,21 @@
         <div class="options-panel">
             <div class="form-check">
                 <label class="form-check-label">
-                    <!-- Coloquei !filter.modes.fullScreen pois, graças a um bug, 
-                        sempre que eu buscava pela variável somente em arquivos.ts 
+                    <!-- Coloquei !filter.modes.fullScreen pois, graças a um bug,
+                        sempre que eu buscava pela variável somente em arquivos.ts
                         o valor retornava o inverso -->
                     <input type="checkbox" class="form-check-input" [(ngModel)]="filter.modes.fullScreen" (click)="
-                        setChanges(); 
+                        setChanges();
                         !filter.modes.fullScreen ? openFullscreen() : closeFullscreen();
                         ">Fullscreen
                 </label>
             </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="filter.modes.underAgedMode" (click)="setChanges();">
+              UnderAged Mode
+            </label>
+          </div>
         </div>
     </div>
     <div class="button-wrapper">
