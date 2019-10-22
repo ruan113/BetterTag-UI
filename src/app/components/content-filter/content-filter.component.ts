@@ -13,17 +13,7 @@ export class ContentFilterComponent implements OnInit {
 
   showFilter = false;
 
-  filter: Filter = {
-    onlyShow: {
-      showImages: true,
-      showGifs: true,
-      showVideos: true
-    },
-    modes: {
-      fullScreen: false,
-      underAgedMode: true
-    }
-  }
+  filter: Filter = new Filter();
 
   constructor(
     private utilsService: UtilsService,
