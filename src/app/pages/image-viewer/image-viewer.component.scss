@@ -96,12 +96,14 @@ app-status-board {
   &.img-fullscreen {
     img {
       max-height: 100%;
+      max-width: 100%;
     }
   }
 
   img {
     max-height: 100%;
     min-height: 100%;
+    max-width: 100%;
   }
 
   .loader-wrapper {

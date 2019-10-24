@@ -1,10 +1,11 @@
-import { Component, OnInit, HostListener, EventEmitter, Output, OnDestroy, Inject } from '@angular/core';
-import { PhotosService } from 'src/app/services/photos/photos.service';
-import { Photo } from 'src/app/models/photo/photo';
-import { Observable, Subject } from 'rxjs';
-import { UtilsService } from 'src/app/services/utils/utils.service';
-import { Filter } from 'src/app/models/filter/filter';
-import { takeUntil } from 'rxjs/operators';
+import {Component, OnInit, HostListener, EventEmitter, Output, OnDestroy, Inject} from '@angular/core';
+import {PhotosService} from 'src/app/services/photos/photos.service';
+import {Photo} from 'src/app/models/photo/photo';
+import {Observable, Subject} from 'rxjs';
+import {UtilsService} from 'src/app/services/utils/utils.service';
+import {Filter} from 'src/app/models/filter/filter';
+import {takeUntil} from 'rxjs/operators';
+import {CsvReaderService} from '../../services/csv-reader/csv-reader.service';
 
 @Component({
   selector: 'app-image-viewer',
@@ -44,6 +45,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   constructor(
     private photosService: PhotosService,
     private utilsService: UtilsService,
+    private csvReaderService: CsvReaderService
   ) {
     this.utilsService.filtersChange.pipe(
       takeUntil(this.onDestroy$.asObservable())
@@ -52,21 +54,26 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
         this.filter = response;
       }
     });
+
+    this.csvReaderService.csvReaderChange.pipe(
+      takeUntil(this.onDestroy$.asObservable())
+    ).subscribe({
+      next: (response: Array<Photo>) => {
+        this.photos = response;
+        if (this.photos !== null) {
+          this.shuffle(this.photos);
+          if (!this.validateResource(this.photos[this.indexSelected].url)) {
+            this.avanca();
+          }
+          this.needIframe = this.utilsService.checkIfNeedIframe(this.photos[this.indexSelected].url);
+        }
+      }
+    });
   }
 
   ngOnInit() {
     this.filter = new Filter();
-
-    this.photosService.list().subscribe((response) => {
-      this.photos = response.map((item: any) => {
-        return { id: item._id, url: item.url };
-      });
-      this.shuffle(this.photos);
-      if (!this.validateResource(this.photos[this.indexSelected].url)) {
-        this.avanca();
-      }
-      this.needIframe = this.utilsService.checkIfNeedIframe(this.photos[this.indexSelected].url);
-    });
+    this.photos = [];
   }
 
   ngOnDestroy(): void {
