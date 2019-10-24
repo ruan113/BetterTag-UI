@@ -12,7 +12,7 @@ export class PhotosService extends ApiService {
   // photos = this.photosSubject.asObservable();
 
   constructor(http: HttpClient) {
-    super(http, 'photos')
+    super(http, 'photos');
   }
 
   list(): Observable<any> {
