@@ -5,6 +5,8 @@ import {HttpClientModule} from '@angular/common/http';
 
 import {AppComponent} from './app.component';
 import {ImageViewerComponent} from './pages/image-viewer/image-viewer.component';
+import {PhotosService} from './services/photos/photos.service';
+import {ApiService} from './services/api/api.service';
 import {SafePipe} from './pipes/safe-pipe';
 import {ComponentsModule} from './components/components.module';
 import {CsvReaderService} from './services/csv-reader/csv-reader.service';
@@ -23,6 +25,8 @@ import {UrlService} from './services/utils/url.service';
     ComponentsModule
   ],
   providers: [
+    PhotosService,
+    ApiService,
     CsvReaderService,
     UrlService
   ],
