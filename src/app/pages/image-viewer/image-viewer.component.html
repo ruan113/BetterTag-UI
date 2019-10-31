@@ -34,8 +34,10 @@
 
   <div class="img-wrapper" [ngClass]="{'img-fullscreen': filter.modes.fullScreen, 'img-blur': filter.modes.underAgedMode}">
     <div class="censure-block" *ngIf="filter.modes.underAgedMode"></div>
-    <img src='{{photos[indexSelected].url}}' [ngClass]="{'d-none': loading}" (error)='removePhoto();'
-         (load)="loading = false; setTimer();" *ngIf="photos.length > 0 && photos[indexSelected].url && !needIframe">
+    <img src='{{photos[indexSelected].url}}' [ngClass]="{'d-none': loading}"
+         (error)='removePhoto();' (load)="loading = false; setTimer();"
+         *ngIf="photos.length > 0 && photos[indexSelected].url && !needIframe"
+         (click)="checkIfIsImage(photos[indexSelected].url) ? avanca() : null">
 
     <iframe [src]="photos[indexSelected].url | safe" frameborder="0" scrolling="no" allowfullscreen
             (load)="this.loading = false; this.utilsService.checkIsVideo(photos[indexSelected].url) ? null : setTimer()"
