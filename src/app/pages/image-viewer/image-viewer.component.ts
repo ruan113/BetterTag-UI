@@ -120,14 +120,12 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
       this.intervalLoopTime += 1000;
       console.log(this.intervalLoopTime);
       this.setTimer();
-      this.toogleCronometroAnimation();
     }
 
     if (event.keyCode === KEY_CODE.DOWN_ARROW) {
       this.intervalLoopTime = (this.intervalLoopTime - 1000) > 4000 ? (this.intervalLoopTime - 1000) : 4000;
       console.log(this.intervalLoopTime);
       this.setTimer();
-      this.toogleCronometroAnimation();
     }
   }
 
@@ -207,6 +205,9 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   }
 
   setTimer() {
+    this.toogleCronometroAnimation(); // Timer cronometro
+
+    // Timer auto avançar
     if (this.playing) {
       if (this.intervalInstance) {
         clearTimeout(this.intervalInstance);

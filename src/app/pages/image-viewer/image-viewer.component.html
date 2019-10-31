@@ -1,9 +1,6 @@
 <!-- IMAGE SHOW CONTROLLER -->
 <div id="viewer-body" class="inner-body" [ngClass]="{'full-screen': filter.modes.fullScreen}">
-  <app-content-filter>
-    <app-display-controller (onNext)="avanca()" (onBack)="retorna()" (onPlay)="play()" [playing]="playing"
-                            *ngIf="filter.modes.fullScreen">
-    </app-display-controller>
+  <app-content-filter (Back)="retorna()" (Next)="avanca()" (Play)="play()" [playing]="playing">
   </app-content-filter>
 
   <app-display-controller (onNext)="avanca()" (onBack)="retorna()" (onPlay)="play()" [playing]="playing"

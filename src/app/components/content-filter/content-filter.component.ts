@@ -1,7 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Filter } from 'src/app/models/filter/filter';
-import { UtilsService } from 'src/app/services/utils/utils.service';
-import { DOCUMENT } from '@angular/common';
+import {Component, OnInit, Inject, Input, Output, EventEmitter} from '@angular/core';
+import {Filter} from 'src/app/models/filter/filter';
+import {UtilsService} from 'src/app/services/utils/utils.service';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-content-filter',
@@ -10,25 +10,31 @@ import { DOCUMENT } from '@angular/common';
 })
 export class ContentFilterComponent implements OnInit {
   elem;
-
   showFilter = false;
+
+  @Input() playing;
+  @Output() Next = new EventEmitter();
+  @Output() Back = new EventEmitter();
+  @Output() Play = new EventEmitter();
+
+  // @Input()
+  isMobile = false;
 
   filter: Filter = new Filter();
 
   constructor(
     private utilsService: UtilsService,
     @Inject(DOCUMENT) private document: any
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.elem = document.documentElement;
     this.utilsService.setFilters(this.filter);
   }
 
-  setChanges() {
-    console.log('novos filtros: ', this.filter);
-    this.utilsService.setFilters(this.filter);
-    // this.setFullscreen.emit(this.filter.modes.fullScreen);
+  setChanges(event: Filter) {
+    this.utilsService.setFilters(event);
   }
 
   openFullscreen() {
@@ -60,5 +66,21 @@ export class ContentFilterComponent implements OnInit {
       /* IE/Edge */
       this.document.msExitFullscreen();
     }
+  }
+
+  toggleFilter(event: boolean) {
+    this.showFilter = event;
+  }
+
+  avanca() {
+    this.Next.emit();
+  }
+
+  retorna() {
+    this.Back.emit();
+  }
+
+  play() {
+    this.Play.emit();
   }
 }

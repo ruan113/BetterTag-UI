@@ -1,0 +1,106 @@
+$translationIn: -80%;
+$translationInExp: -85%;
+$max-opacity: 0.9;
+$min-opacity: 0.2;
+
+.inner-body {
+  width: 200px;
+  border-left: 2px solid #2f2f2f;
+  border-right: 2px solid #2f2f2f;
+  border-bottom: 2px solid #2f2f2f;
+  border-radius: 0px 0px 10px 10px;
+  padding: 10px;
+  background: #191919;
+
+  // Off Fullscreen
+  &.body-closed {
+    animation: slideUp .5s;
+    transform: translateY($translationIn);
+    opacity: $min-opacity;
+
+    &.transparent{
+      opacity: $min-opacity;
+    }
+    &.on-Fullscreen {
+      animation: slideUpFullscreen .5s !important;
+      transform: translateY($translationInExp) !important;
+    }
+  }
+  &.body-opened {
+    animation: slideDown .5s;
+    transform: translateY(0);
+    opacity: $max-opacity;
+
+    &.transparent{
+      opacity: $max-opacity;
+    }
+    &.on-Fullscreen {
+      animation: slideDownFullscreen .5s !important;
+      transform: translateY(0) !important;
+    }
+  }
+}
+
+.content-types {
+  color: white;
+  .options-panel {
+    margin-left: 10px;
+  }
+}
+
+.button-wrapper {
+  text-align: center;
+  margin-top: 15px;
+  button{
+    color: black !important;
+    background: orange;
+    border-radius: 25px;
+    padding: 0;
+    width: 50px;
+  }
+}
+
+// Essas animações ficam aqui por dependerem das variaveis
+@keyframes slideUp {
+  from {
+    transform: translateY(0);
+    opacity: $max-opacity;
+  }
+  to   {
+    transform: translateY($translationIn);
+    opacity: $min-opacity;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY($translationIn);
+    opacity: $min-opacity;
+  }
+  to   {
+    transform: translateY(0);
+    opacity: $max-opacity;
+  }
+}
+
+@keyframes slideUpFullscreen {
+  from {
+    transform: translateY(0);
+    opacity: $max-opacity;
+  }
+  to   {
+    transform: translateY($translationInExp);
+    opacity: $min-opacity;
+  }
+}
+
+@keyframes slideDownFullscreen {
+  from {
+    transform: translateY($translationInExp);
+    opacity: $min-opacity;
+  }
+  to   {
+    transform: translateY(0);
+    opacity: $max-opacity;
+  }
+}

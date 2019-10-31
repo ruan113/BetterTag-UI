@@ -12,7 +12,21 @@
 .navbar {
   padding: 0 1rem !important;
   background: #2f2f2f !important;
-  z-index: 9999;
+  z-index: 100;
+}
+
+.file-button {
+  position: absolute;
+  z-index: 101;
+  top: 0;
+  right: 10px;
+  font-size: 28px;
+
+  button {
+    background: transparent;
+    border: 0;
+    color: orange;
+  }
 }
 
 .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show > .nav-link {
