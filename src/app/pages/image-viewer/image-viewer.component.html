@@ -16,8 +16,7 @@
   </div>
 
   <div class="cronometro-wrapper" [ngClass]="{
-        'fade-out': playCronometroAnimation,
-        'hidden': !playCronometroAnimation}">
+        'fade-out': !showCronometroAnimation}">
     <div class="seconds-wrapper">
       <span>{{intervalLoopTime / 1000}}s</span>
     </div>

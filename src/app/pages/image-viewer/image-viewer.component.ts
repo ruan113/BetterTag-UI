@@ -7,6 +7,15 @@ import {Filter} from 'src/app/models/filter/filter';
 import {takeUntil} from 'rxjs/operators';
 import {CsvReaderService} from '../../services/csv-reader/csv-reader.service';
 
+
+enum KEY_CODE {
+  RIGHT_ARROW = 39,
+  LEFT_ARROW = 37,
+  UP_ARROW = 38,
+  DOWN_ARROW = 40,
+  SPACE_ARROW = 32
+}
+
 @Component({
   selector: 'app-image-viewer',
   templateUrl: './image-viewer.component.html',
@@ -22,8 +31,8 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   indexSelected = 0;
   loading = false;
 
-  playCronometroAnimation = false;
-  cronoAnimationInstance;
+  showCronometroAnimation = false;
+  cronometroAnimationInstance = null;
 
   photos: Array<Photo> = [];
   needIframe = false;
@@ -33,14 +42,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   @Output() fullScreenMode: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   showStatusBoard = false;
-
-  KEY_CODE = {
-    RIGHT_ARROW: 39,
-    LEFT_ARROW: 37,
-    UP_ARROW: 38,
-    DOWN_ARROW: 40,
-    SPACE_ARROW: 32
-  };
 
   constructor(
     private photosService: PhotosService,
@@ -102,27 +103,27 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   keyEvent(event: KeyboardEvent) {
     // console.log(event);
 
-    if (event.keyCode === this.KEY_CODE.RIGHT_ARROW) {
+    if (event.keyCode === KEY_CODE.RIGHT_ARROW) {
       this.avanca();
     }
 
-    if (event.keyCode === this.KEY_CODE.LEFT_ARROW) {
+    if (event.keyCode === KEY_CODE.LEFT_ARROW) {
       this.retorna();
     }
 
-    if (event.keyCode === this.KEY_CODE.SPACE_ARROW) {
+    if (event.keyCode === KEY_CODE.SPACE_ARROW) {
       this.playing = !this.playing;
       this.setTimer();
     }
 
-    if (event.keyCode === this.KEY_CODE.UP_ARROW) {
+    if (event.keyCode === KEY_CODE.UP_ARROW) {
       this.intervalLoopTime += 1000;
       console.log(this.intervalLoopTime);
       this.setTimer();
       this.toogleCronometroAnimation();
     }
 
-    if (event.keyCode === this.KEY_CODE.DOWN_ARROW) {
+    if (event.keyCode === KEY_CODE.DOWN_ARROW) {
       this.intervalLoopTime = (this.intervalLoopTime - 1000) > 4000 ? (this.intervalLoopTime - 1000) : 4000;
       console.log(this.intervalLoopTime);
       this.setTimer();
@@ -185,13 +186,23 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   }
 
   toogleCronometroAnimation() {
-    if (!this.cronoAnimationInstance) {
-      this.playCronometroAnimation = true;
+    if (!this.showCronometroAnimation) {
+      this.showCronometroAnimation = true;
 
-      this.cronoAnimationInstance = setTimeout(() => {
-        this.playCronometroAnimation = false;
-        this.cronoAnimationInstance = null;
+      this.cronometroAnimationInstance = setTimeout(() => {
+        this.showCronometroAnimation = false;
+        this.cronometroAnimationInstance = null;
       }, 1000);
+    } else {
+      if (this.cronometroAnimationInstance) {
+        clearTimeout(this.cronometroAnimationInstance);
+        this.cronometroAnimationInstance = null;
+
+        this.cronometroAnimationInstance = setTimeout(() => {
+          this.showCronometroAnimation = false;
+          this.cronometroAnimationInstance = null;
+        }, 1000);
+      }
     }
   }
 
