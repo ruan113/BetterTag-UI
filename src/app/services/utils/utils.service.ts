@@ -10,21 +10,8 @@ export class UtilsService {
 
   httpclient;
 
-  private filtersChange$: BehaviorSubject<Filter> = new BehaviorSubject<Filter>(null);
-  filtersChange = this.filtersChange$.asObservable();
-  filters: Filter;
-
   constructor(http: HttpClient) {
     this.httpclient = http;
-  }
-
-  setFilters(filters: Filter) {
-    this.filters = filters;
-    this.filtersChange$.next(this.filters);
-  }
-
-  getFilters() {
-    return this.filters;
   }
 
   getUrl(url: string): Observable<any> {
