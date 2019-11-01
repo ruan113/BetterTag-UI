@@ -27,7 +27,6 @@ export class FilterDesktopComponent implements OnInit {
 
   setChanges() {
     this.changes.emit(this.filter);
-    this.setFullScreen(this.filter.modes.fullScreen);
   }
 
   setFullScreen(bool: boolean) {

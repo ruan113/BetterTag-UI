@@ -3,6 +3,7 @@ import { UtilsService } from './services/utils/utils.service';
 import { Filter } from './models/filter/filter';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import {FilterService} from './services/filter/filter.service';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +17,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   filter: Filter;
 
-  constructor(private utilsService: UtilsService) {
-    this.utilsService.filtersChange.pipe(
+  constructor(private filterService: FilterService) {
+    this.filterService.filtersChange.pipe(
       takeUntil(this.onDestroy$.asObservable())
     ).subscribe({
       next: (response: Filter) => {

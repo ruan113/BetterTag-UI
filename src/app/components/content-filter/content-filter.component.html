@@ -1,14 +1,22 @@
 <!-- Coloquei !filter.modes.fullScreen pois, graças a um bug,
              sempre que eu buscava pela variável somente em arquivos.ts
              o valor retornava o inverso -->
-<app-filter-desktop *ngIf="!isMobile" [showFilter]="showFilter"
-                    (setVisible)="toggleFilter($event)"
+<app-filter-desktop *ngIf="isMobile" [showFilter]="showFilter"
                     (changes)="setChanges($event)"
                     (fullScreen)="
                       !$event ? openFullscreen() : closeFullscreen();
-                      this.filter.modes.fullScreen = !$event;"
->
+                      this.filter.modes.fullScreen = !$event;">
   <app-display-controller (Next)="avanca()" (Back)="retorna()" (Play)="play()" [playing]="playing"
                           *ngIf="filter.modes.fullScreen">
   </app-display-controller>
 </app-filter-desktop>
+
+<app-filter-mobile *ngIf="!isMobile" [showFilter]="showFilter"
+                    (changes)="setChanges($event)"
+                    (fullScreen)="
+                      !$event ? openFullscreen() : closeFullscreen();
+                      this.filter.modes.fullScreen = !$event;">
+  <app-display-controller (Next)="avanca()" (Back)="retorna()" (Play)="play()" [playing]="playing"
+                          *ngIf="filter.modes.fullScreen">
+  </app-display-controller>
+</app-filter-mobile>

@@ -6,6 +6,7 @@ import {UtilsService} from 'src/app/services/utils/utils.service';
 import {Filter} from 'src/app/models/filter/filter';
 import {takeUntil} from 'rxjs/operators';
 import {CsvReaderService} from '../../services/csv-reader/csv-reader.service';
+import {FilterService} from '../../services/filter/filter.service';
 
 
 enum KEY_CODE {
@@ -46,9 +47,10 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   constructor(
     private photosService: PhotosService,
     private utilsService: UtilsService,
+    private filterService: FilterService,
     private csvReaderService: CsvReaderService
   ) {
-    this.utilsService.filtersChange.pipe(
+    this.filterService.filtersChange.pipe(
       takeUntil(this.onDestroy$.asObservable())
     ).subscribe({
       next: (response: Filter) => {

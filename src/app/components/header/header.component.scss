@@ -18,7 +18,7 @@
 .file-button {
   position: absolute;
   z-index: 101;
-  top: 0;
+  top: 2px;
   right: 10px;
   font-size: 28px;
 
@@ -27,6 +27,15 @@
     border: 0;
     color: orange;
   }
+}
+
+.filter-button {
+  position: absolute;
+  top: 4px;
+  left: 10px;
+  z-index: 101;
+  color: orange;
+  font-size: 25px;
 }
 
 .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show > .nav-link {

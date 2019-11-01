@@ -13,7 +13,15 @@ app-content-filter {
   position: absolute;
   top: 0;
   left: 50px;
-  z-index: 1;
+  z-index: 2;
+}
+
+@media only screen and (max-width: 600px) {
+  app-content-filter {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 app-status-board {
@@ -152,11 +160,12 @@ app-status-board {
   border-radius: 10px;
   background: #2f2f2f;
 
-  h2{
+  h2 {
     color: orange;
     margin-bottom: 20px;
     font-weight: bold;
   }
+
   img {
     max-width: 100%;
     margin: 0 auto;

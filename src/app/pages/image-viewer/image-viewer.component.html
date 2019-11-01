@@ -3,7 +3,7 @@
   <app-content-filter (Back)="retorna()" (Next)="avanca()" (Play)="play()" [playing]="playing">
   </app-content-filter>
 
-  <app-display-controller (onNext)="avanca()" (onBack)="retorna()" (onPlay)="play()" [playing]="playing"
+  <app-display-controller (Back)="retorna()" (Next)="avanca()" (Play)="play()" [playing]="playing"
                           *ngIf="!filter.modes.fullScreen">
   </app-display-controller>
 

@@ -1,0 +1,48 @@
+@import "animations";
+
+$max-opacity: 0.9;
+
+.inner-body {
+  width: 200px;
+  border: 2px solid #2f2f2f;
+  border-radius: 10px;
+  padding: 10px;
+  background: #191919;
+
+  // Off Fullscreen
+  &.body-closed {
+    animation: fadeout .5s;
+    opacity: 0;
+  }
+  &.body-opened {
+    animation: fadein .5s;
+    opacity: $max-opacity;
+  }
+}
+
+.close-button{
+  position: absolute;
+  top: 0;
+  right: 10px;
+  font-size: 25px;
+  color: grey;
+}
+
+.content-types {
+  color: white;
+  .options-panel {
+    margin-left: 10px;
+  }
+}
+
+.button-wrapper {
+  text-align: center;
+  margin-top: 15px;
+  button{
+    color: black !important;
+    background: orange;
+    border-radius: 25px;
+    padding: 0;
+    width: 50px;
+  }
+}

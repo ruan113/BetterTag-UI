@@ -39,7 +39,7 @@
         <label class="form-check-label">
           <input type="checkbox" class="form-check-input"
                  [(ngModel)]="filter.modes.fullScreen"
-                 (click)="setChanges();">
+                 (click)="setChanges(); setFullScreen(filter.modes.fullScreen);">
           Fullscreen
         </label>
       </div>

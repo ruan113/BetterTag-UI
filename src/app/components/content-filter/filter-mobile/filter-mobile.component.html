@@ -1,1 +1,57 @@
-<p>filter-mobile works!</p>
+<div class="inner-body" [ngClass]="{
+        'body-opened': showFilter,
+        'body-closed': !showFilter
+    }">
+  <div class="content-types">
+    <div class="close-button">
+      <i class="fas fa-times" (click)="toggleFilter()"></i>
+    </div>
+    <ng-content></ng-content>
+
+    <h4>Only show:</h4>
+    <div class="options-panel">
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="filter.onlyShow.showImages"
+                 (click)="setChanges()">
+          Images
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="filter.onlyShow.showGifs"
+                 (click)="setChanges()">
+          Gifs
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="filter.onlyShow.showVideos"
+                 (click)="setChanges()">
+          Videos
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="content-types">
+    <h4>Modes:</h4>
+    <div class="options-panel">
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input"
+                 [(ngModel)]="filter.modes.fullScreen"
+                 (click)="setChanges(); setFullScreen(filter.modes.fullScreen);">
+          Fullscreen
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input"
+                 [(ngModel)]="filter.modes.underAgedMode"
+                 (click)="setChanges();">
+          UnderAged Mode
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
