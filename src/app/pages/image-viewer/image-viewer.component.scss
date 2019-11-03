@@ -2,7 +2,7 @@
 
 .inner-body {
   position: relative;
-  height: 95%;
+  height: calc(100% - 43.19px);
 
   &.full-screen {
     height: 100%;
@@ -99,7 +99,7 @@ app-status-board {
   text-align: center;
   margin-top: 10px;
   position: relative;
-  height: 90%;
+  height: calc(100% - 43.19px - 35px - 10px);
 
   &.img-fullscreen {
     img {
@@ -110,8 +110,13 @@ app-status-board {
 
   img {
     max-height: 100%;
-    min-height: 100%;
+    //min-height: 100%;
     max-width: 100%;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .loader-wrapper {
