@@ -154,6 +154,15 @@ app-status-board {
   }
 }
 
+.filter-button {
+  position: absolute;
+  top: 4px;
+  left: 10px;
+  z-index: 101;
+  color: orange;
+  font-size: 25px;
+  opacity: 0.3;
+}
 
 .censure-panel {
   position: absolute;

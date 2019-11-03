@@ -240,4 +240,8 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   checkIfIsImage(url): boolean {
     return this.utilsService.checkIsImage(url);
   }
+
+  toggleFilters() {
+    this.filterService.toggleFilter();
+  }
 }

@@ -8,9 +8,13 @@
   </app-display-controller>
 
   <div class="status-button" (click)="showStatusBoard = !showStatusBoard;"
-       *ngIf="!filter.modes.fullScreen && !isMobile">
-    <i class="fas fa-chevron-circle-left"
-       [ngClass]="{'status-opened ': showStatusBoard, 'status-closed ': !showStatusBoard}"></i>
+             *ngIf="!filter.modes.fullScreen && !isMobile">
+  <i class="fas fa-chevron-circle-left"
+     [ngClass]="{'status-opened ': showStatusBoard, 'status-closed ': !showStatusBoard}"></i>
+  </div>
+
+  <div class="filter-button" *ngIf="isMobile && filter.modes.fullScreen">
+    <i class="fas fa-filter" (click)="toggleFilters()"></i>
   </div>
 
   <div class="cronometro-wrapper" [ngClass]="{
