@@ -12,6 +12,7 @@ import {ComponentsModule} from './components/components.module';
 import {CsvReaderService} from './services/csv-reader/csv-reader.service';
 import {UrlService} from './services/utils/url.service';
 import {UtilsService} from './services/utils/utils.service';
+import {WindowService} from './services/utils/window.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {UtilsService} from './services/utils/utils.service';
     ApiService,
     CsvReaderService,
     UrlService,
-    UtilsService
+    UtilsService,
+    WindowService
   ],
   bootstrap: [AppComponent]
 })
