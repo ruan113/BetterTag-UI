@@ -1,8 +1,11 @@
 @import "animations";
 
+$headerSize: 43.19px;
+$footerSize: 35px;
+
 .inner-body {
   position: relative;
-  height: calc(100% - 43.19px);
+  height: calc(100% - #{$headerSize});
 
   &.full-screen {
     height: 100%;
@@ -99,7 +102,7 @@ app-status-board {
   text-align: center;
   margin-top: 10px;
   position: relative;
-  height: calc(100% - 43.19px - 35px - 10px);
+  height: calc(100% - #{$headerSize} - #{$footerSize} - 10px);
 
   &.img-fullscreen {
     img {
