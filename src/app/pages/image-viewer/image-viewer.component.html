@@ -7,7 +7,8 @@
                           *ngIf="!filter.modes.fullScreen">
   </app-display-controller>
 
-  <div class="status-button" (click)="showStatusBoard = !showStatusBoard;" *ngIf="!filter.modes.fullScreen">
+  <div class="status-button" (click)="showStatusBoard = !showStatusBoard;"
+       *ngIf="!filter.modes.fullScreen && !isMobile">
     <i class="fas fa-chevron-circle-left"
        [ngClass]="{'status-opened ': showStatusBoard, 'status-closed ': !showStatusBoard}"></i>
   </div>
@@ -22,7 +23,7 @@
 
   <app-status-board (close)="showStatusBoard = $event;"
                     [ngClass]="{'status-opened ': showStatusBoard, 'status-closed ': !showStatusBoard}"
-                    [photo]="photos[indexSelected]"></app-status-board>
+                    [photo]="photos[indexSelected]" *ngIf="!isMobile"></app-status-board>
 
   <div class="censure-panel" *ngIf="filter.modes.underAgedMode">
     <h2>Conteudo Adulto!</h2>

@@ -1,5 +1,4 @@
 import {Component, OnInit, HostListener, EventEmitter, Output, OnDestroy, Inject} from '@angular/core';
-import {PhotosService} from 'src/app/services/photos/photos.service';
 import {Photo} from 'src/app/models/photo/photo';
 import {Observable, Subject} from 'rxjs';
 import {UtilsService} from 'src/app/services/utils/utils.service';
@@ -48,8 +47,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   showStatusBoard = false;
 
   constructor(
-    private photosService: PhotosService,
-    private utilsService: UtilsService,
+    public utilsService: UtilsService,
     private filterService: FilterService,
     private csvReaderService: CsvReaderService,
     private windowService: WindowService,
