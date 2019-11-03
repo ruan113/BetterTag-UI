@@ -4,13 +4,13 @@
         <h2>Info Board</h2>
     </div>
     <div class="content">
-        <h4>Url:</h4>
-        <span>teste</span>
-        <h4>Resource Info:</h4>
-        <span>Type: Video</span><br>
-        <span>Source: redtube</span>
+      <b>ID: </b><span>{{photo ? photo.id : 0}}</span><br>
+      <b>Url: </b><a href="{{photo? photo.url : ''}}">{{photo? photo.url : ''}}</a>
+      <h4>Resource Info:</h4>
+      <span>Type: {{photo ? photo.type : ''}}</span><br>
+<!--      <span>Source: redtube</span>-->
     </div>
     <div class="buttons-panel">
-        <button type="button" class="btn btn-danger">Remover</button>
+        <button type="button" class="btn btn-danger" (click)="removePhoto()">Remover</button>
     </div>
 </div>

@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { Filter } from 'src/app/models/filter/filter';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Tipos} from '../../models/photo/photo';
 
 @Injectable({
   providedIn: 'root'
@@ -70,5 +70,18 @@ export class UtilsService {
     return false;
   }
 
+  getContentType(url: string): Tipos {
+    if (this.checkIsImage(url)) {
+      return url.indexOf('jpg') ? Tipos.JPG : Tipos.PNG;
+    } else {
+      if (this.checkIsGif(url) || this.checkIsGifEmbed(url)) {
+        return Tipos.GIF;
+      } else {
+        if (this.checkIsVideo(url)) {
+          return Tipos.VIDEO;
+        }
+      }
+    }
+  }
 
 }

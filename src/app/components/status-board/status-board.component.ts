@@ -1,4 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Photo} from '../../models/photo/photo';
+import {UtilsService} from '../../services/utils/utils.service';
+import {CsvReaderService} from '../../services/csv-reader/csv-reader.service';
 
 @Component({
   selector: 'app-status-board',
@@ -8,15 +11,25 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class StatusBoardComponent implements OnInit {
 
   @Input()
-  url: string;
+  photo: Photo;
   @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor() { }
+  constructor(
+    private utilsService: UtilsService,
+    private csvService: CsvReaderService
+  ) {
+  }
 
   ngOnInit() {
   }
 
   closePanel() {
     this.close.emit(false);
+  }
+
+  removePhoto() {
+    if (this.photo) {
+
+    }
   }
 }

@@ -21,7 +21,8 @@
   </div>
 
   <app-status-board (close)="showStatusBoard = $event;"
-                    [ngClass]="{'status-opened ': showStatusBoard, 'status-closed ': !showStatusBoard}"></app-status-board>
+                    [ngClass]="{'status-opened ': showStatusBoard, 'status-closed ': !showStatusBoard}"
+                    [photo]="photos[indexSelected]"></app-status-board>
 
   <div class="censure-panel" *ngIf="filter.modes.underAgedMode">
     <h2>Conteudo Adulto!</h2>

@@ -11,6 +11,7 @@ import {SafePipe} from './pipes/safe-pipe';
 import {ComponentsModule} from './components/components.module';
 import {CsvReaderService} from './services/csv-reader/csv-reader.service';
 import {UrlService} from './services/utils/url.service';
+import {UtilsService} from './services/utils/utils.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {UrlService} from './services/utils/url.service';
     PhotosService,
     ApiService,
     CsvReaderService,
-    UrlService
+    UrlService,
+    UtilsService
   ],
   bootstrap: [AppComponent]
 })
