@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Filter} from '../../../models/filter/filter';
+import {FilterService} from '../../../services/filter/filter.service';
 
 @Component({
   selector: 'app-filter-desktop',
@@ -15,14 +16,14 @@ export class FilterDesktopComponent implements OnInit {
 
   filter: Filter = new Filter();
 
-  constructor() {
+  constructor(private filterService: FilterService) {
   }
 
   ngOnInit() {
   }
 
   toggleFilter() {
-    this.setVisible.emit(!this.showFilter);
+    this.filterService.toggleFilter();
   }
 
   setChanges() {
