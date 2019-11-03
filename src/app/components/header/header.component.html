@@ -7,7 +7,7 @@
     </button>
 </nav>
 
-<div class="filter-button">
+<div class="filter-button" *ngIf="isMobile">
   <i class="fas fa-filter" (click)="toggleFilters()"></i>
 </div>
 

@@ -7,6 +7,7 @@ import {Filter} from 'src/app/models/filter/filter';
 import {takeUntil} from 'rxjs/operators';
 import {CsvReaderService} from '../../services/csv-reader/csv-reader.service';
 import {FilterService} from '../../services/filter/filter.service';
+import {WindowService} from '../../services/utils/window.service';
 
 
 enum KEY_CODE {
@@ -40,6 +41,8 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
 
   filter: Filter;
 
+  isMobile = false;
+
   @Output() fullScreenMode: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   showStatusBoard = false;
@@ -48,7 +51,8 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     private photosService: PhotosService,
     private utilsService: UtilsService,
     private filterService: FilterService,
-    private csvReaderService: CsvReaderService
+    private csvReaderService: CsvReaderService,
+    private windowService: WindowService,
   ) {
     this.filterService.filtersChange.pipe(
       takeUntil(this.onDestroy$.asObservable())
@@ -70,6 +74,14 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
           }
           this.needIframe = this.utilsService.checkIfNeedIframe(this.photos[this.indexSelected].url);
         }
+      }
+    });
+
+    this.windowService.screenSize.pipe(
+      takeUntil(this.onDestroy$.asObservable())
+    ).subscribe({
+      next: (response: boolean) => {
+        this.isMobile = response;
       }
     });
   }

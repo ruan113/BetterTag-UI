@@ -5,6 +5,7 @@ import {DOCUMENT} from '@angular/common';
 import {FilterService} from '../../services/filter/filter.service';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
+import {WindowService} from '../../services/utils/window.service';
 
 @Component({
   selector: 'app-content-filter',
@@ -23,13 +24,13 @@ export class ContentFilterComponent implements OnInit, OnDestroy {
   @Output() Back = new EventEmitter();
   @Output() Play = new EventEmitter();
 
-  // @Input()
   isMobile = false;
 
   filter: Filter = new Filter();
 
   constructor(
     private filterService: FilterService,
+    private windowService: WindowService,
     @Inject(DOCUMENT) private document: any
   ) {
     this.filterService.showFilters.pipe(
@@ -37,6 +38,13 @@ export class ContentFilterComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: (response: boolean) => {
         this.showFilter = response;
+      }
+    });
+    this.windowService.screenSize.pipe(
+      takeUntil(this.onDestroy$.asObservable())
+    ).subscribe({
+      next: (response: boolean) => {
+        this.isMobile = response;
       }
     });
   }
@@ -85,10 +93,6 @@ export class ContentFilterComponent implements OnInit, OnDestroy {
         this.document.msExitFullscreen();
       }
     }
-  }
-
-  toggleFilter(event: boolean) {
-    this.showFilter = event;
   }
 
   avanca() {
