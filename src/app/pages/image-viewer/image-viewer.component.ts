@@ -113,8 +113,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    // console.log(event);
-
     if (event.keyCode === KEY_CODE.RIGHT_ARROW) {
       this.avanca();
     }
@@ -131,13 +129,13 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     if (event.keyCode === KEY_CODE.UP_ARROW) {
       this.intervalLoopTime += 1000;
       console.log(this.intervalLoopTime);
-      this.setTimer();
+      this.setTimer('cronometro');
     }
 
     if (event.keyCode === KEY_CODE.DOWN_ARROW) {
       this.intervalLoopTime = (this.intervalLoopTime - 1000) > 4000 ? (this.intervalLoopTime - 1000) : 4000;
       console.log(this.intervalLoopTime);
-      this.setTimer();
+      this.setTimer('cronometro');
     }
   }
 
@@ -216,8 +214,13 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     }
   }
 
-  setTimer() {
-    this.toogleCronometroAnimation(); // Timer cronometro
+  setTimer(type?: string) {
+    // Especifica que tipo de setagem se refere a chamada
+    if (type) {
+      if (type === 'cronometro') {
+        this.toogleCronometroAnimation(); // Timer cronometro
+      }
+    }
 
     // Timer auto avançar
     if (this.playing) {
