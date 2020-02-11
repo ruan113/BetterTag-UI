@@ -9,6 +9,7 @@ export class Photo {
     id: string;
     url: string;
     type: Tipos;
+    needIframe: boolean;
 
     constructor(url: string, id?: string, tipo?: Tipos) {
         this.url = url;

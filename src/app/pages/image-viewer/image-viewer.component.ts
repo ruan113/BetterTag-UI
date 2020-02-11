@@ -1,12 +1,13 @@
 import {Component, OnInit, HostListener, EventEmitter, Output, OnDestroy, Inject} from '@angular/core';
 import {Photo} from 'src/app/models/photo/photo';
-import {Observable, Subject} from 'rxjs';
+import {forkJoin, Observable, Subject} from 'rxjs';
 import {UtilsService} from 'src/app/services/utils/utils.service';
 import {Filter} from 'src/app/models/filter/filter';
 import {takeUntil} from 'rxjs/operators';
 import {CsvReaderService} from '../../services/csv-reader/csv-reader.service';
 import {FilterService} from '../../services/filter/filter.service';
 import {WindowService} from '../../services/utils/window.service';
+import {ActivatedRoute} from '@angular/router';
 
 
 enum KEY_CODE {
@@ -29,14 +30,14 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   intervalLoopTime = 5000; // Em ms
   intervalInstance;
 
-  indexSelected = 0;
+  indexSelected = -1;
+  initialUrl = '';
   loading = false;
 
   showCronometroAnimation = false;
   cronometroAnimationInstance = null;
 
   photos: Array<Photo> = [];
-  needIframe = false;
 
   filter: Filter;
 
@@ -51,7 +52,23 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     private filterService: FilterService,
     private csvReaderService: CsvReaderService,
     private windowService: WindowService,
+    private route: ActivatedRoute
   ) {
+    // this.csvReaderService.csvReaderChange.pipe(
+    //   takeUntil(this.onDestroy$.asObservable())
+    // ).subscribe({
+    //   next: (response: Array<Photo>) => {
+    //     this.photos = response;
+    //     if (this.photos !== null) {
+    //       this.shuffle(this.photos);
+    //       if (!this.utilsService.validateResource(this.photos[this.indexSelected].url)) {
+    //         this.avanca();
+    //       }
+    //       this.needIframe = this.utilsService.checkIfNeedIframe(this.photos[this.indexSelected].url);
+    //     }
+    //   }
+    // });
+
     this.filterService.filtersChange.pipe(
       takeUntil(this.onDestroy$.asObservable())
     ).subscribe({
@@ -59,18 +76,22 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
         this.filter = response;
       }
     });
-
     this.csvReaderService.csvReaderChange.pipe(
       takeUntil(this.onDestroy$.asObservable())
     ).subscribe({
       next: (response: Array<Photo>) => {
-        this.photos = response;
-        if (this.photos !== null) {
-          this.shuffle(this.photos);
-          if (!this.validateResource(this.photos[this.indexSelected].url)) {
-            this.avanca();
-          }
-          this.needIframe = this.utilsService.checkIfNeedIframe(this.photos[this.indexSelected].url);
+        if (response) {
+          console.log(this.photos);
+          this.route.params.subscribe(params => {
+            console.log('params', params);
+            this.indexSelected = response.indexOf(response.find((it: Photo) => {
+              return it.url === params.url;
+            }));
+            this.photos = response;
+            this.indexSelected = this.indexSelected !== -1 ? this.indexSelected : 0;
+            console.log(this.photos[this.indexSelected]);
+            console.log(params.url);
+          });
         }
       }
     });
@@ -86,7 +107,9 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.filter = new Filter();
-    this.photos = [];
+    this.photos = this.photos ? this.photos : [];
+    this.indexSelected = this.indexSelected ? this.indexSelected : 0;
+    console.log(this.photos);
   }
 
   ngOnDestroy(): void {
@@ -96,19 +119,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   removePhoto() {
     console.log('Foto removida: ', this.photos[this.indexSelected]);
     this.photos.splice(this.indexSelected, 1);
-  }
-
-  validateResource(url) {
-    if (this.filter.onlyShow.showGifs && (this.utilsService.checkIsGif(url) || this.utilsService.checkIsGifEmbed(url))) {
-      return true;
-    }
-    if (this.filter.onlyShow.showImages && this.utilsService.checkIsImage(url)) {
-      return true;
-    }
-    if (this.filter.onlyShow.showVideos && this.utilsService.checkIsVideo(url)) {
-      return true;
-    }
-    return false;
   }
 
   @HostListener('window:keyup', ['$event'])
@@ -146,9 +156,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     } else {
       this.indexSelected = 0;
     }
-    if (this.validateResource(this.photos[this.indexSelected].url)) {
-      this.needIframe = this.utilsService.checkIfNeedIframe(this.photos[this.indexSelected].url);
-    } else {
+    if (!this.utilsService.validateResource(this.photos[this.indexSelected].url)) {
       this.avanca();
     }
     console.log(this.photos[this.indexSelected]);
@@ -162,9 +170,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
       this.indexSelected = this.photos.length - 1;
     }
     console.log(this.photos[this.indexSelected].url);
-    if (this.validateResource(this.photos[this.indexSelected].url)) {
-      this.needIframe = this.utilsService.checkIfNeedIframe(this.photos[this.indexSelected].url);
-    } else {
+    if (!this.utilsService.validateResource(this.photos[this.indexSelected].url)) {
       this.retorna();
     }
   }
@@ -174,24 +180,24 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     this.setTimer();
   }
 
-  shuffle(array) {
-    let currentIndex = array.length, temporaryValue, randomIndex;
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-
-    return array;
-  }
+  // shuffle(array) {
+  //   let currentIndex = array.length, temporaryValue, randomIndex;
+  //
+  //   // While there remain elements to shuffle...
+  //   while (0 !== currentIndex) {
+  //
+  //     // Pick a remaining element...
+  //     randomIndex = Math.floor(Math.random() * currentIndex);
+  //     currentIndex -= 1;
+  //
+  //     // And swap it with the current element.
+  //     temporaryValue = array[currentIndex];
+  //     array[currentIndex] = array[randomIndex];
+  //     array[randomIndex] = temporaryValue;
+  //   }
+  //
+  //   return array;
+  // }
 
   toogleCronometroAnimation() {
     if (!this.showCronometroAnimation) {

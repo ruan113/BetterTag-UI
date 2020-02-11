@@ -14,13 +14,19 @@ export class CsvReaderService {
 
   private csvReaderChange$: BehaviorSubject<Array<Photo>> = new BehaviorSubject<Array<Photo>>(null);
   csvReaderChange = this.csvReaderChange$.asObservable();
+
+  private photosChange$: BehaviorSubject<Array<Photo>> = new BehaviorSubject<Array<Photo>>(null);
+  photosChange = this.photosChange$.asObservable();
   photos: Array<Photo>;
 
-  constructor(private urlService: UrlService, private utilService: UtilsService) {
+  constructor(
+    private urlService: UrlService,
+    private utilService: UtilsService) {
   }
 
-  setPhotos(photos: Array<Photo>) {
+  setPhotos(photos?: Array<Photo>) {
     this.photos = photos;
+    this.utilService.shuffle(this.photos);
     console.log(photos);
     this.csvReaderChange$.next(this.photos);
   }
@@ -39,7 +45,8 @@ export class CsvReaderService {
             array.push({
               id: index,
               url: formattedUrl,
-              type: this.utilService.getContentType(formattedUrl)
+              type: this.utilService.getContentType(formattedUrl),
+              needIframe: this.utilService.checkIfNeedIframe(formattedUrl)
             });
           });
           this.setPhotos(array);
@@ -48,6 +55,7 @@ export class CsvReaderService {
     }
   }
 
-  remove() {}
+  remove() {
+  }
 
 }

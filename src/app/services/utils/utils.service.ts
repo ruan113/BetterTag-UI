@@ -1,17 +1,34 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {Tipos} from '../../models/photo/photo';
+import {takeUntil} from 'rxjs/operators';
+import {Filter} from '../../models/filter/filter';
+import {FilterService} from '../filter/filter.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
+  private onDestroy$ = new Subject();
 
   httpclient;
 
-  constructor(http: HttpClient) {
+  filter: Filter;
+
+  constructor(
+    http: HttpClient,
+    private filterService: FilterService,
+  ) {
     this.httpclient = http;
+
+    this.filterService.filtersChange.pipe(
+      takeUntil(this.onDestroy$.asObservable())
+    ).subscribe({
+      next: (response: Filter) => {
+        this.filter = response;
+      }
+    });
   }
 
   getUrl(url: string): Observable<any> {
@@ -61,7 +78,7 @@ export class UtilsService {
 
 
   checkIsImage(url: string) {
-    if (url.indexOf('jpg') !== -1) {
+    if ((url.indexOf('jpg') || url.indexOf('jpeg')) !== -1) {
       return true;
     }
     if (url.indexOf('png') !== -1) {
@@ -72,7 +89,7 @@ export class UtilsService {
 
   getContentType(url: string): Tipos {
     if (this.checkIsImage(url)) {
-      return url.indexOf('jpg') ? Tipos.JPG : Tipos.PNG;
+      return (url.indexOf('jpg') || url.indexOf('jpeg'))  ? Tipos.JPG : Tipos.PNG;
     } else {
       if (this.checkIsGif(url) || this.checkIsGifEmbed(url)) {
         return Tipos.GIF;
@@ -82,6 +99,39 @@ export class UtilsService {
         }
       }
     }
+  }
+
+  validateResource(url) {
+    if (this.filter.onlyShow.showGifs && (this.checkIsGif(url) || this.checkIsGifEmbed(url))) {
+      return true;
+    }
+    if (this.filter.onlyShow.showImages && this.checkIsImage(url)) {
+      return true;
+    }
+    if (this.filter.onlyShow.showVideos && this.checkIsVideo(url)) {
+      return true;
+    }
+    return false;
+  }
+
+
+  shuffle(array) {
+    let currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
   }
 
 }
