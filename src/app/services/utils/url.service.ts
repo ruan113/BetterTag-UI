@@ -10,7 +10,7 @@ export class UrlService {
 
   getEmbed(url: string) {
     const source = this.getSource(url);
-    console.log(source);
+    // console.log(source);
     url += '';
 
     if (source !== '') {
