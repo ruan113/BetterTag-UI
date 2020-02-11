@@ -1,0 +1,28 @@
+body {
+  overflow: auto;
+}
+
+.content-container {
+  .row {
+    div[class*="col-"]{
+      padding: 10px !important;
+      .img-container {
+        position: relative;
+        height: 300px;
+        text-align: center;
+        overflow: hidden;
+        border-radius: 10px;
+        img {
+          min-height: 100%;
+          position: absolute;
+          max-width: 100%;
+          transform: translateX(-50%);
+        }
+        iframe {
+          min-height: 100%;
+          min-width: 100%;
+        }
+      }
+    }
+  }
+}
