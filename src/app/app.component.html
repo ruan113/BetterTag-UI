@@ -1,5 +1,5 @@
-<div class="inner-body">
     <app-header *ngIf="!filter.modes.fullScreen"></app-header>
-    <router-outlet></router-outlet>
+    <div class="inner-body">
+      <router-outlet></router-outlet>
+    </div>
     <app-footer *ngIf="!filter.modes.fullScreen"></app-footer>
-</div>

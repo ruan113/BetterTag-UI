@@ -11,12 +11,14 @@ import {CsvReaderService} from './services/csv-reader/csv-reader.service';
 import {UrlService} from './services/utils/url.service';
 import {UtilsService} from './services/utils/utils.service';
 import {WindowService} from './services/utils/window.service';
+import { ExplorerMenuComponent } from './pages/explorer-menu/explorer-menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ImageViewerComponent,
     SafePipe,
+    ExplorerMenuComponent,
   ],
   imports: [
     BrowserModule,
