@@ -2,6 +2,7 @@ $translationIn: -80%;
 $translationInExp: -85%;
 $max-opacity: 0.9;
 $min-opacity: 0.2;
+$headerSize: 43.19px;
 
 .inner-body {
   width: 200px;
@@ -17,11 +18,13 @@ $min-opacity: 0.2;
     animation: slideUp .5s;
     transform: translateY($translationIn);
     opacity: $min-opacity;
+    margin-top: $headerSize;
 
     &.transparent{
       opacity: $min-opacity;
     }
     &.on-Fullscreen {
+      margin-top: 0;
       animation: slideUpFullscreen .5s !important;
       transform: translateY($translationInExp) !important;
     }
@@ -30,11 +33,13 @@ $min-opacity: 0.2;
     animation: slideDown .5s;
     transform: translateY(0);
     opacity: $max-opacity;
+    margin-top: $headerSize;
 
     &.transparent{
       opacity: $max-opacity;
     }
     &.on-Fullscreen {
+      margin-top: 0;
       animation: slideDownFullscreen .5s !important;
       transform: translateY(0) !important;
     }
