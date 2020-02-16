@@ -22,7 +22,7 @@ export class ExplorerMenuComponent implements OnInit {
     public utilsService: UtilsService,
     public router: Router,
   ) {
-    this.csvReaderService.csvReaderChange.pipe(
+    this.csvReaderService.photosChange.pipe(
       takeUntil(this.onDestroy$.asObservable())
     ).subscribe({
       next: (response: Array<Photo>) => {
@@ -32,13 +32,13 @@ export class ExplorerMenuComponent implements OnInit {
             this.contentToShow.push(this.photos[i]);
           }
         }
-        console.log(this.contentToShow);
+        // console.log(this.contentToShow);
       }
     });
   }
 
   ngOnInit() {
-    console.log(this.csvReaderService.photos);
+    // console.log(this.csvReaderService.photos);
     this.photos = undefined;
   }
 

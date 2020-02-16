@@ -6,12 +6,10 @@
   <div class="row" *ngIf="contentToShow && contentToShow.length > 0">
     <div class="col-md-3" *ngFor="let content of contentToShow; let i = index">
       <div class="img-container">
-        <div class="click-panel"></div>
+        <div class="click-panel" (click)="goToContentViewer(content.url)"></div>
         <img src='{{content.url}}'
              (error)='removePhoto(i);'
-             *ngIf="content.url && !content.needIframe"
-             (click)="goToContentViewer(content.url)">
-
+             *ngIf="content.url && !content.needIframe">
         <iframe [src]="content.url | safe" frameborder="0" scrolling="no"
                 (error)='removePhoto(i);' *ngIf="content.needIframe"></iframe>
       </div>
