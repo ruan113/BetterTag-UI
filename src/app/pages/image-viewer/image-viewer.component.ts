@@ -76,7 +76,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
         this.filter = response;
       }
     });
-    this.csvReaderService.csvReaderChange.pipe(
+    this.csvReaderService.photosChange.pipe(
       takeUntil(this.onDestroy$.asObservable())
     ).subscribe({
       next: (response: Array<Photo>) => {

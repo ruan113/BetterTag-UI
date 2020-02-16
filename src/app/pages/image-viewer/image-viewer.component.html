@@ -8,9 +8,9 @@
   </app-display-controller>
 
   <div class="status-button" (click)="showStatusBoard = !showStatusBoard;"
-             *ngIf="!filter.modes.fullScreen && !isMobile">
-  <i class="fas fa-chevron-circle-left"
-     [ngClass]="{'status-opened ': showStatusBoard, 'status-closed ': !showStatusBoard}"></i>
+       *ngIf="!filter.modes.fullScreen && !isMobile">
+    <i class="fas fa-chevron-circle-left"
+       [ngClass]="{'status-opened ': showStatusBoard, 'status-closed ': !showStatusBoard}"></i>
   </div>
 
   <div class="filter-button" *ngIf="isMobile && filter.modes.fullScreen">
@@ -34,7 +34,8 @@
     <img src="https://media.giphy.com/media/QIPEV0HWAiXVm/giphy.gif" alt="">
   </div>
 
-  <div class="img-wrapper" [ngClass]="{'img-fullscreen': filter.modes.fullScreen, 'img-blur': filter.modes.underAgedMode}">
+  <div class="content-box"
+       [ngClass]="{'img-fullscreen': filter.modes.fullScreen, 'img-blur': filter.modes.underAgedMode}">
     <div class="censure-block" *ngIf="filter.modes.underAgedMode"></div>
     <img src='{{photos[indexSelected].url}}' [ngClass]="{'d-none': loading}"
          (error)='removePhoto();' (load)="loading = false; setTimer();"
